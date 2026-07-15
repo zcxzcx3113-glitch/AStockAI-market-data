@@ -39,7 +39,7 @@ FIELDS = ",".join(
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AStockAI-Market-Scanner/1.0"
 
 
-def request_bytes(url: str, *, referer: str | None = None, attempts: int = 4) -> bytes:
+def request_bytes(url: str, *, referer: str | None = None, attempts: int = 4, timeout: int = 18) -> bytes:
     headers = {"User-Agent": USER_AGENT, "Accept": "*/*"}
     if referer:
         headers["Referer"] = referer
@@ -47,7 +47,7 @@ def request_bytes(url: str, *, referer: str | None = None, attempts: int = 4) ->
     for attempt in range(attempts):
         try:
             request = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(request, timeout=18) as response:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
                 return response.read()
         except Exception as exc:  # network providers can fail transiently
             last_error = exc
@@ -56,8 +56,8 @@ def request_bytes(url: str, *, referer: str | None = None, attempts: int = 4) ->
     raise RuntimeError(f"request failed after {attempts} attempts: {url}") from last_error
 
 
-def request_json(url: str) -> dict[str, Any]:
-    return json.loads(request_bytes(url).decode("utf-8"))
+def request_json(url: str, *, attempts: int = 4, timeout: int = 18) -> dict[str, Any]:
+    return json.loads(request_bytes(url, attempts=attempts, timeout=timeout).decode("utf-8"))
 
 
 def number(value: Any, default: float = 0.0) -> float:
@@ -101,7 +101,7 @@ def fetch_universe(page_size: int = 300) -> list[dict[str, Any]]:
     # A single response avoids provider pagination rate limits when the endpoint honors a large pz.
     for endpoint in EASTMONEY_APIS:
         try:
-            payload = request_json(f"{endpoint}?{universe_query(1, 6_000)}")
+            payload = request_json(f"{endpoint}?{universe_query(1, 6_000)}", attempts=2, timeout=15)
             data = payload.get("data") or {}
             total = int(data.get("total") or 0)
             page_rows = data.get("diff") or []
@@ -121,7 +121,7 @@ def fetch_universe(page_size: int = 300) -> list[dict[str, Any]]:
         for offset in range(len(EASTMONEY_APIS)):
             endpoint = EASTMONEY_APIS[(page + offset) % len(EASTMONEY_APIS)]
             try:
-                payload = request_json(f"{endpoint}?{universe_query(page, page_size)}")
+                payload = request_json(f"{endpoint}?{universe_query(page, page_size)}", attempts=2, timeout=15)
                 break
             except Exception as exc:
                 errors.append(f"{endpoint}: {exc}")
@@ -205,7 +205,7 @@ def fetch_kline(code: str, count: int = 70) -> list[dict[str, float | str]]:
     ticker = symbol(code)
     param = f"{ticker},day,,,{count},qfq"
     url = f"{TENCENT_KLINE_API}?{urllib.parse.urlencode({'param': param})}"
-    stock = (request_json(url).get("data") or {}).get(ticker) or {}
+    stock = (request_json(url, attempts=2, timeout=10).get("data") or {}).get(ticker) or {}
     rows = stock.get("qfqday") or stock.get("day") or []
     result = []
     for row in rows:
@@ -436,10 +436,10 @@ def build_feed(top: int) -> dict[str, Any]:
     eligible = [row for row in universe if is_eligible(row, now)]
     if len(eligible) < 100:
         raise RuntimeError(f"too few eligible stocks: {len(eligible)}")
-    preselected = sorted(eligible, key=snapshot_score, reverse=True)[:180]
+    preselected = sorted(eligible, key=snapshot_score, reverse=True)[:96]
 
     enriched: list[dict[str, Any]] = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=12) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=16) as pool:
         futures = [pool.submit(enrich_one, row) for row in preselected]
         for future in concurrent.futures.as_completed(futures):
             item = future.result()
