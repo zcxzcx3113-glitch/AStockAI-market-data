@@ -28,7 +28,11 @@ EASTMONEY_APIS = (
 TENCENT_KLINE_API = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
 TENCENT_QUOTE_API = "https://qt.gtimg.cn/q="
 SINA_QUOTE_API = "https://hq.sinajs.cn/list="
-UNIVERSE = "m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23,m:0+t:81+s:2048"
+MARKET_SEGMENTS = {
+    "Shanghai": "m:1+t:2,m:1+t:23",
+    "Shenzhen": "m:0+t:6,m:0+t:80",
+    "Beijing": "m:0+t:81+s:2048",
+}
 FIELDS = ",".join(
     (
         "f2", "f3", "f5", "f6", "f8", "f10", "f12", "f14", "f15", "f16",
@@ -80,7 +84,7 @@ def symbol(code: str) -> str:
     return "sz" + code
 
 
-def universe_query(page: int, page_size: int) -> str:
+def universe_query(market_filter: str, page: int, page_size: int) -> str:
     return urllib.parse.urlencode(
         {
             "pn": page,
@@ -90,26 +94,28 @@ def universe_query(page: int, page_size: int) -> str:
             "fltt": 2,
             "invt": 2,
             "fid": "f62",
-            "fs": UNIVERSE,
+            "fs": market_filter,
             "fields": FIELDS,
             "ut": "bd1d9ddb04089700cf9c27f6f7426281",
         }
     )
 
 
-def fetch_universe(page_size: int = 300) -> list[dict[str, Any]]:
-    # A single response avoids provider pagination rate limits when the endpoint honors a large pz.
+def fetch_segment(name: str, market_filter: str, page_size: int = 500) -> list[dict[str, Any]]:
+    # Per-exchange bulk responses avoid the provider's deep-pagination limit.
     for endpoint in EASTMONEY_APIS:
         try:
-            payload = request_json(f"{endpoint}?{universe_query(1, 6_000)}", attempts=2, timeout=15)
+            payload = request_json(
+                f"{endpoint}?{universe_query(market_filter, 1, 3_500)}", attempts=2, timeout=15
+            )
             data = payload.get("data") or {}
             total = int(data.get("total") or 0)
             page_rows = data.get("diff") or []
             unique = {str(row.get("f12", "")): row for row in page_rows if str(row.get("f12", "")).isdigit()}
-            if total >= 4_000 and len(unique) >= min(total, 4_000):
+            if total > 0 and len(unique) >= total:
                 return list(unique.values())
         except Exception as exc:
-            print(f"warning: bulk universe request failed via {endpoint}: {exc}")
+            print(f"warning: {name} bulk request failed via {endpoint}: {exc}", flush=True)
 
     # Fallback: rotate provider hosts between smaller pages and slow down to avoid burst limiting.
     rows: list[dict[str, Any]] = []
@@ -121,12 +127,14 @@ def fetch_universe(page_size: int = 300) -> list[dict[str, Any]]:
         for offset in range(len(EASTMONEY_APIS)):
             endpoint = EASTMONEY_APIS[(page + offset) % len(EASTMONEY_APIS)]
             try:
-                payload = request_json(f"{endpoint}?{universe_query(page, page_size)}", attempts=2, timeout=15)
+                payload = request_json(
+                    f"{endpoint}?{universe_query(market_filter, page, page_size)}", attempts=2, timeout=15
+                )
                 break
             except Exception as exc:
                 errors.append(f"{endpoint}: {exc}")
         if payload is None:
-            raise RuntimeError(f"all Eastmoney hosts failed on page {page}: {' | '.join(errors)}")
+            raise RuntimeError(f"all Eastmoney hosts failed for {name} page {page}: {' | '.join(errors)}")
         data = payload.get("data") or {}
         page_rows = data.get("diff") or []
         total = int(data.get("total") or 0)
@@ -136,8 +144,20 @@ def fetch_universe(page_size: int = 300) -> list[dict[str, Any]]:
         page += 1
         time.sleep(0.35 + random.random() * 0.2)
     unique = {str(row.get("f12", "")): row for row in rows if str(row.get("f12", "")).isdigit()}
-    if total is None or total < 4_000 or len(unique) < min(total, 4_000):
-        raise RuntimeError(f"incomplete A-share universe: expected={total}, received={len(unique)}")
+    if total is None or total <= 0 or len(unique) < total:
+        raise RuntimeError(f"incomplete {name} universe: expected={total}, received={len(unique)}")
+    return list(unique.values())
+
+
+def fetch_universe() -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for name, market_filter in MARKET_SEGMENTS.items():
+        segment = fetch_segment(name, market_filter)
+        print(f"fetched {name}: {len(segment)}", flush=True)
+        rows.extend(segment)
+    unique = {str(row.get("f12", "")): row for row in rows if str(row.get("f12", "")).isdigit()}
+    if len(unique) < 4_000:
+        raise RuntimeError(f"incomplete A-share universe after merge: received={len(unique)}")
     return list(unique.values())
 
 
