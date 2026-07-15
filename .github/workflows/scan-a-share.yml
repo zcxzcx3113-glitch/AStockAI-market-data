@@ -43,12 +43,12 @@ jobs:
 
       - name: Publish latest successful feed
         run: |
-          if git diff --quiet -- data/candidates.json; then
+          git add data/candidates.json
+          if git diff --cached --quiet; then
             echo "Candidate feed is unchanged"
             exit 0
           fi
           git config user.name "AStockAI Market Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/candidates.json
           git commit -m "Update full A-share candidate feed"
           git push
