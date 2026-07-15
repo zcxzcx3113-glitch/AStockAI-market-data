@@ -1,0 +1,1393 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-07-15T10:07:01+08:00",
+  "trade_date": "2026-07-15",
+  "market": "CN_A",
+  "strategy": "capital_technical_v1",
+  "coverage": {
+    "markets": [
+      "Shanghai",
+      "Shenzhen",
+      "Beijing"
+    ],
+    "market_count": 5875,
+    "eligible_count": 2050,
+    "technical_checked_count": 96,
+    "daily_kline_count": 96,
+    "quote_verified_count": 30
+  },
+  "sources": {
+    "universe_and_capital_flow": "EASTMONEY_WEB",
+    "technical_bars": "TENCENT_WEB",
+    "primary_quote_check": "TENCENT_WEB",
+    "secondary_quote_check": "SINA_WEB"
+  },
+  "filters": {
+    "excluded": [
+      "ST/*ST",
+      "delisting",
+      "suspended",
+      "listed_under_60_days",
+      "low_liquidity"
+    ],
+    "minimum_daily_amount_cny": 50000000,
+    "minimum_float_market_cap_cny": 1000000000
+  },
+  "limitations": [
+    "Public web endpoints have no official availability SLA.",
+    "A candidate is an observation shortlist, not an investment recommendation or order signal.",
+    "A failed scan never overwrites the last known-good feed."
+  ],
+  "candidates": [
+    {
+      "rank": 1,
+      "code": "002241",
+      "name": "歌尔股份",
+      "industry": "消费电子",
+      "score": 83.27,
+      "snapshot_price": 22.22,
+      "change_pct": 3.59,
+      "amount": 830073773.45,
+      "turnover_rate": 1.2,
+      "volume_ratio": 1.81,
+      "main_net_inflow": 125372442.0,
+      "main_net_ratio": 15.1,
+      "technical": {
+        "ma5": 21.992,
+        "ma10": 21.669,
+        "ma20": 22.369,
+        "above_ma20": true,
+        "distance_ma20_pct": 0.454,
+        "momentum_20d_pct": -3.769,
+        "volume_ratio_5d": 1.285,
+        "score": 78.359,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 22.51,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入1.25亿元，净流入占比15.10%",
+        "换手率1.20%，量比1.81",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 21.95,
+        "high": 22.62
+      },
+      "confirmation_price": 23.07,
+      "risk_price": 21.16
+    },
+    {
+      "rank": 2,
+      "code": "300251",
+      "name": "光线传媒",
+      "industry": "影视院线",
+      "score": 82.8,
+      "snapshot_price": 12.18,
+      "change_pct": 5.65,
+      "amount": 611404025.17,
+      "turnover_rate": 1.82,
+      "volume_ratio": 2.56,
+      "main_net_inflow": 71859732.0,
+      "main_net_ratio": 11.75,
+      "technical": {
+        "ma5": 12.098,
+        "ma10": 11.946,
+        "ma20": 11.61,
+        "above_ma20": true,
+        "distance_ma20_pct": 4.823,
+        "momentum_20d_pct": 4.553,
+        "volume_ratio_5d": 1.379,
+        "score": 98.113,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 12.16,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入7186万元，净流入占比11.75%",
+        "换手率1.82%，量比2.56",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 11.86,
+        "high": 12.22
+      },
+      "confirmation_price": 12.46,
+      "risk_price": 11.26
+    },
+    {
+      "rank": 3,
+      "code": "002594",
+      "name": "比亚迪",
+      "industry": "乘用车",
+      "score": 82.68,
+      "snapshot_price": 92.97,
+      "change_pct": 2.61,
+      "amount": 2611330913.1,
+      "turnover_rate": 0.82,
+      "volume_ratio": 3.3,
+      "main_net_inflow": 445028912.0,
+      "main_net_ratio": 17.04,
+      "technical": {
+        "ma5": 89.31,
+        "ma10": 88.019,
+        "ma20": 85.604,
+        "above_ma20": true,
+        "distance_ma20_pct": 8.079,
+        "momentum_20d_pct": 3.213,
+        "volume_ratio_5d": 0.979,
+        "score": 80.738,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 92.53,
+        "timestamp": "20260715101739",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入4.45亿元，净流入占比17.04%",
+        "换手率0.82%，量比3.30",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 90.22,
+        "high": 92.99
+      },
+      "confirmation_price": 94.84,
+      "risk_price": 83.04
+    },
+    {
+      "rank": 4,
+      "code": "002439",
+      "name": "启明星辰",
+      "industry": "软件开发",
+      "score": 82.67,
+      "snapshot_price": 13.36,
+      "change_pct": 3.25,
+      "amount": 220640644.97,
+      "turnover_rate": 2.27,
+      "volume_ratio": 2.54,
+      "main_net_inflow": 37805902.0,
+      "main_net_ratio": 17.13,
+      "technical": {
+        "ma5": 13.274,
+        "ma10": 13.066,
+        "ma20": 13.03,
+        "above_ma20": true,
+        "distance_ma20_pct": 2.537,
+        "momentum_20d_pct": 2.219,
+        "volume_ratio_5d": 1.093,
+        "score": 93.558,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 13.36,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入3781万元，净流入占比17.13%",
+        "换手率2.27%，量比2.54",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 13.03,
+        "high": 13.43
+      },
+      "confirmation_price": 13.69,
+      "risk_price": 12.56
+    },
+    {
+      "rank": 5,
+      "code": "603296",
+      "name": "华勤技术",
+      "industry": "消费电子",
+      "score": 80.98,
+      "snapshot_price": 80.2,
+      "change_pct": 3.07,
+      "amount": 1062277501.0,
+      "turnover_rate": 1.68,
+      "volume_ratio": 1.75,
+      "main_net_inflow": 81181233.0,
+      "main_net_ratio": 7.64,
+      "technical": {
+        "ma5": 80.42,
+        "ma10": 76.03,
+        "ma20": 75.665,
+        "above_ma20": true,
+        "distance_ma20_pct": 5.968,
+        "momentum_20d_pct": 7.134,
+        "volume_ratio_5d": 1.852,
+        "score": 94.527,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 80.18,
+        "timestamp": "20260715101739",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入8118万元，净流入占比7.64%",
+        "换手率1.68%，量比1.75",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 78.18,
+        "high": 80.58
+      },
+      "confirmation_price": 82.18,
+      "risk_price": 73.4
+    },
+    {
+      "rank": 6,
+      "code": "300684",
+      "name": "中石科技",
+      "industry": "电子化学品Ⅱ",
+      "score": 79.3,
+      "snapshot_price": 68.9,
+      "change_pct": 3.04,
+      "amount": 716414468.8,
+      "turnover_rate": 5.14,
+      "volume_ratio": 2.42,
+      "main_net_inflow": 87764318.0,
+      "main_net_ratio": 12.25,
+      "technical": {
+        "ma5": 67.496,
+        "ma10": 66.689,
+        "ma20": 62.876,
+        "above_ma20": true,
+        "distance_ma20_pct": 9.979,
+        "momentum_20d_pct": 19.637,
+        "volume_ratio_5d": 1.072,
+        "score": 69.187,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 69.18,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入8776万元，净流入占比12.25%",
+        "换手率5.14%，量比2.42",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 67.45,
+        "high": 69.53
+      },
+      "confirmation_price": 70.91,
+      "risk_price": 60.99
+    },
+    {
+      "rank": 7,
+      "code": "002714",
+      "name": "牧原股份",
+      "industry": "养殖业",
+      "score": 79.09,
+      "snapshot_price": 39.65,
+      "change_pct": 4.28,
+      "amount": 1259878615.66,
+      "turnover_rate": 0.99,
+      "volume_ratio": 2.62,
+      "main_net_inflow": 192577698.0,
+      "main_net_ratio": 15.37,
+      "technical": {
+        "ma5": 38.322,
+        "ma10": 37.983,
+        "ma20": 36.075,
+        "above_ma20": true,
+        "distance_ma20_pct": 10.132,
+        "momentum_20d_pct": 13.352,
+        "volume_ratio_5d": 0.94,
+        "score": 75.23,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 39.71,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入1.93亿元，净流入占比15.37%",
+        "换手率0.99%，量比2.62",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 38.72,
+        "high": 39.91
+      },
+      "confirmation_price": 40.7,
+      "risk_price": 34.99
+    },
+    {
+      "rank": 8,
+      "code": "688627",
+      "name": "精智达",
+      "industry": "通用设备",
+      "score": 78.96,
+      "snapshot_price": 619.91,
+      "change_pct": 2.92,
+      "amount": 1961023804.0,
+      "turnover_rate": 4.26,
+      "volume_ratio": 3.2,
+      "main_net_inflow": 301496112.0,
+      "main_net_ratio": 15.37,
+      "technical": {
+        "ma5": 610.594,
+        "ma10": 593.389,
+        "ma20": 608.506,
+        "above_ma20": true,
+        "distance_ma20_pct": 3.003,
+        "momentum_20d_pct": 25.916,
+        "volume_ratio_5d": 0.889,
+        "score": 63.531,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 626.78,
+        "timestamp": "20260715101741",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入3.01亿元，净流入占比15.37%",
+        "换手率4.26%，量比3.20",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 611.11,
+        "high": 629.91
+      },
+      "confirmation_price": 642.45,
+      "risk_price": 589.17
+    },
+    {
+      "rank": 9,
+      "code": "300454",
+      "name": "深信服",
+      "industry": "软件开发",
+      "score": 78.73,
+      "snapshot_price": 109.98,
+      "change_pct": 3.87,
+      "amount": 958366284.95,
+      "turnover_rate": 3.04,
+      "volume_ratio": 2.06,
+      "main_net_inflow": 100689663.0,
+      "main_net_ratio": 10.51,
+      "technical": {
+        "ma5": 108.316,
+        "ma10": 101.284,
+        "ma20": 98.963,
+        "above_ma20": true,
+        "distance_ma20_pct": 11.224,
+        "momentum_20d_pct": 11.666,
+        "volume_ratio_5d": 1.774,
+        "score": 77.027,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 110.07,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入1.01亿元，净流入占比10.51%",
+        "换手率3.04%，量比2.06",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 107.32,
+        "high": 110.62
+      },
+      "confirmation_price": 112.82,
+      "risk_price": 95.99
+    },
+    {
+      "rank": 10,
+      "code": "300459",
+      "name": "汤姆猫",
+      "industry": "游戏Ⅱ",
+      "score": 76.64,
+      "snapshot_price": 3.46,
+      "change_pct": 2.08,
+      "amount": 136740234.57,
+      "turnover_rate": 1.22,
+      "volume_ratio": 1.83,
+      "main_net_inflow": 22931940.0,
+      "main_net_ratio": 16.77,
+      "technical": {
+        "ma5": 3.422,
+        "ma10": 3.405,
+        "ma20": 3.425,
+        "above_ma20": true,
+        "distance_ma20_pct": 0.438,
+        "momentum_20d_pct": -5.234,
+        "volume_ratio_5d": 1.181,
+        "score": 75.829,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 3.44,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入2293万元，净流入占比16.77%",
+        "换手率1.22%，量比1.83",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 3.35,
+        "high": 3.46
+      },
+      "confirmation_price": 3.53,
+      "risk_price": 3.23
+    },
+    {
+      "rank": 11,
+      "code": "000858",
+      "name": "五 粮 液",
+      "industry": "白酒Ⅱ",
+      "score": 76.58,
+      "snapshot_price": 75.78,
+      "change_pct": 3.2,
+      "amount": 1952615250.89,
+      "turnover_rate": 0.68,
+      "volume_ratio": 4.41,
+      "main_net_inflow": 242498880.0,
+      "main_net_ratio": 12.53,
+      "technical": {
+        "ma5": 73.312,
+        "ma10": 73.023,
+        "ma20": 73.944,
+        "above_ma20": true,
+        "distance_ma20_pct": 2.443,
+        "momentum_20d_pct": -3.294,
+        "volume_ratio_5d": 0.998,
+        "score": 76.502,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 75.75,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入2.42亿元，净流入占比12.53%",
+        "换手率0.68%，量比4.41",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 73.86,
+        "high": 76.13
+      },
+      "confirmation_price": 77.64,
+      "risk_price": 71.2
+    },
+    {
+      "rank": 12,
+      "code": "600999",
+      "name": "招商证券",
+      "industry": "证券Ⅱ",
+      "score": 76.41,
+      "snapshot_price": 20.69,
+      "change_pct": 1.57,
+      "amount": 769337628.0,
+      "turnover_rate": 0.5,
+      "volume_ratio": 1.8,
+      "main_net_inflow": 79481176.0,
+      "main_net_ratio": 10.33,
+      "technical": {
+        "ma5": 20.778,
+        "ma10": 20.981,
+        "ma20": 20.7,
+        "above_ma20": true,
+        "distance_ma20_pct": 0.094,
+        "momentum_20d_pct": 9.456,
+        "volume_ratio_5d": 0.762,
+        "score": 72.171,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 20.72,
+        "timestamp": "20260715101740",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入7948万元，净流入占比10.33%",
+        "换手率0.50%，量比1.80",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 20.2,
+        "high": 20.82
+      },
+      "confirmation_price": 21.24,
+      "risk_price": 19.48
+    },
+    {
+      "rank": 13,
+      "code": "300738",
+      "name": "奥飞数据",
+      "industry": "通信服务",
+      "score": 76.37,
+      "snapshot_price": 20.16,
+      "change_pct": 1.41,
+      "amount": 488508751.43,
+      "turnover_rate": 2.51,
+      "volume_ratio": 1.81,
+      "main_net_inflow": 40888777.0,
+      "main_net_ratio": 8.37,
+      "technical": {
+        "ma5": 20.464,
+        "ma10": 20.292,
+        "ma20": 20.478,
+        "above_ma20": false,
+        "distance_ma20_pct": -1.797,
+        "momentum_20d_pct": 0.119,
+        "volume_ratio_5d": 1.087,
+        "score": 81.127,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 20.11,
+        "timestamp": "20260715101739",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入4089万元，净流入占比8.37%",
+        "换手率2.51%，量比1.81",
+        "现价仍在20日均线下方，需等待确认",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 19.61,
+        "high": 20.21
+      },
+      "confirmation_price": 20.61,
+      "risk_price": 18.9
+    },
+    {
+      "rank": 14,
+      "code": "300315",
+      "name": "掌趣科技",
+      "industry": "游戏Ⅱ",
+      "score": 76.23,
+      "snapshot_price": 3.99,
+      "change_pct": 1.79,
+      "amount": 104176323.0,
+      "turnover_rate": 1.03,
+      "volume_ratio": 1.92,
+      "main_net_inflow": 14090885.0,
+      "main_net_ratio": 13.53,
+      "technical": {
+        "ma5": 3.968,
+        "ma10": 3.96,
+        "ma20": 3.962,
+        "above_ma20": true,
+        "distance_ma20_pct": 0.454,
+        "momentum_20d_pct": -3.163,
+        "volume_ratio_5d": 1.011,
+        "score": 76.766,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 3.98,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入1409万元，净流入占比13.53%",
+        "换手率1.03%，量比1.92",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 3.88,
+        "high": 4.0
+      },
+      "confirmation_price": 4.08,
+      "risk_price": 3.74
+    },
+    {
+      "rank": 15,
+      "code": "300750",
+      "name": "宁德时代",
+      "industry": "电池",
+      "score": 75.7,
+      "snapshot_price": 376.94,
+      "change_pct": 3.35,
+      "amount": 6139256582.31,
+      "turnover_rate": 0.39,
+      "volume_ratio": 2.03,
+      "main_net_inflow": 871515584.0,
+      "main_net_ratio": 14.2,
+      "technical": {
+        "ma5": 364.71,
+        "ma10": 369.39,
+        "ma20": 381.671,
+        "above_ma20": false,
+        "distance_ma20_pct": -1.428,
+        "momentum_20d_pct": -6.768,
+        "volume_ratio_5d": 1.179,
+        "score": 49.066,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 376.22,
+        "timestamp": "20260715101739",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0053
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入8.72亿元，净流入占比14.20%",
+        "换手率0.39%，量比2.03",
+        "现价仍在20日均线下方，需等待确认",
+        "腾讯/新浪双源复核，价差0.005%"
+      ],
+      "buy_zone": {
+        "low": 366.81,
+        "high": 378.1
+      },
+      "confirmation_price": 385.63,
+      "risk_price": 353.65
+    },
+    {
+      "rank": 16,
+      "code": "688037",
+      "name": "芯源微",
+      "industry": "半导体",
+      "score": 75.27,
+      "snapshot_price": 384.1,
+      "change_pct": -0.21,
+      "amount": 892656829.0,
+      "turnover_rate": 1.15,
+      "volume_ratio": 1.72,
+      "main_net_inflow": 90816497.0,
+      "main_net_ratio": 10.18,
+      "technical": {
+        "ma5": 391.242,
+        "ma10": 383.009,
+        "ma20": 361.746,
+        "above_ma20": true,
+        "distance_ma20_pct": 5.284,
+        "momentum_20d_pct": 40.022,
+        "volume_ratio_5d": 0.739,
+        "score": 69.91,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 381.71,
+        "timestamp": "20260715101741",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入9082万元，净流入占比10.18%",
+        "换手率1.15%，量比1.72",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 372.17,
+        "high": 383.62
+      },
+      "confirmation_price": 391.25,
+      "risk_price": 350.89
+    },
+    {
+      "rank": 17,
+      "code": "688179",
+      "name": "阿拉丁",
+      "industry": "化学制品",
+      "score": 73.68,
+      "snapshot_price": 26.04,
+      "change_pct": 5.27,
+      "amount": 204175365.0,
+      "turnover_rate": 2.22,
+      "volume_ratio": 2.26,
+      "main_net_inflow": 38084825.0,
+      "main_net_ratio": 18.65,
+      "technical": {
+        "ma5": 25.772,
+        "ma10": 25.478,
+        "ma20": 25.434,
+        "above_ma20": true,
+        "distance_ma20_pct": 2.109,
+        "momentum_20d_pct": 25.58,
+        "volume_ratio_5d": 0.921,
+        "score": 74.178,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 25.97,
+        "timestamp": "20260715101741",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入3808万元，净流入占比18.65%",
+        "换手率2.22%，量比2.26",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 25.32,
+        "high": 26.1
+      },
+      "confirmation_price": 26.62,
+      "risk_price": 24.41
+    },
+    {
+      "rank": 18,
+      "code": "601995",
+      "name": "中金公司",
+      "industry": "证券Ⅱ",
+      "score": 73.42,
+      "snapshot_price": 36.8,
+      "change_pct": 6.24,
+      "amount": 671454441.0,
+      "turnover_rate": 0.63,
+      "volume_ratio": 3.76,
+      "main_net_inflow": 91297290.0,
+      "main_net_ratio": 13.6,
+      "technical": {
+        "ma5": 36.336,
+        "ma10": 36.368,
+        "ma20": 35.934,
+        "above_ma20": true,
+        "distance_ma20_pct": 4.774,
+        "momentum_20d_pct": 9.831,
+        "volume_ratio_5d": 0.907,
+        "score": 72.958,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 37.65,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入9130万元，净流入占比13.60%",
+        "换手率0.63%，量比3.76",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 36.71,
+        "high": 37.84
+      },
+      "confirmation_price": 38.59,
+      "risk_price": 34.86
+    },
+    {
+      "rank": 19,
+      "code": "301607",
+      "name": "富特科技",
+      "industry": "汽车零部件",
+      "score": 73.15,
+      "snapshot_price": 51.92,
+      "change_pct": -3.54,
+      "amount": 271156015.59,
+      "turnover_rate": 3.41,
+      "volume_ratio": 1.57,
+      "main_net_inflow": 35244935.0,
+      "main_net_ratio": 13.0,
+      "technical": {
+        "ma5": 54.552,
+        "ma10": 53.261,
+        "ma20": 49.376,
+        "above_ma20": true,
+        "distance_ma20_pct": 5.174,
+        "momentum_20d_pct": 36.514,
+        "volume_ratio_5d": 0.949,
+        "score": 71.661,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 51.99,
+        "timestamp": "20260715101739",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0385
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入3524万元，净流入占比13.00%",
+        "换手率3.41%，量比1.57",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.038%"
+      ],
+      "buy_zone": {
+        "low": 50.69,
+        "high": 52.25
+      },
+      "confirmation_price": 53.29,
+      "risk_price": 47.89
+    },
+    {
+      "rank": 20,
+      "code": "000157",
+      "name": "中联重科",
+      "industry": "工程机械",
+      "score": 72.66,
+      "snapshot_price": 7.27,
+      "change_pct": 1.68,
+      "amount": 189651362.61,
+      "turnover_rate": 0.37,
+      "volume_ratio": 2.2,
+      "main_net_inflow": 35208329.0,
+      "main_net_ratio": 18.56,
+      "technical": {
+        "ma5": 7.148,
+        "ma10": 7.175,
+        "ma20": 7.259,
+        "above_ma20": true,
+        "distance_ma20_pct": 0.014,
+        "momentum_20d_pct": -4.222,
+        "volume_ratio_5d": 0.693,
+        "score": 63.913,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 7.25,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入3521万元，净流入占比18.56%",
+        "换手率0.37%，量比2.20",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 7.07,
+        "high": 7.29
+      },
+      "confirmation_price": 7.43,
+      "risk_price": 6.81
+    },
+    {
+      "rank": 21,
+      "code": "300233",
+      "name": "金城医药",
+      "industry": "化学制药",
+      "score": 72.55,
+      "snapshot_price": 14.01,
+      "change_pct": 3.33,
+      "amount": 147968165.0,
+      "turnover_rate": 2.91,
+      "volume_ratio": 2.61,
+      "main_net_inflow": 18535167.0,
+      "main_net_ratio": 12.53,
+      "technical": {
+        "ma5": 13.354,
+        "ma10": 13.38,
+        "ma20": 13.037,
+        "above_ma20": true,
+        "distance_ma20_pct": 6.854,
+        "momentum_20d_pct": 13.714,
+        "volume_ratio_5d": 1.447,
+        "score": 71.422,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 13.95,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入1854万元，净流入占比12.53%",
+        "换手率2.91%，量比2.61",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 13.6,
+        "high": 14.02
+      },
+      "confirmation_price": 14.3,
+      "risk_price": 12.65
+    },
+    {
+      "rank": 22,
+      "code": "000528",
+      "name": "柳    工",
+      "industry": "工程机械",
+      "score": 71.46,
+      "snapshot_price": 8.16,
+      "change_pct": 2.13,
+      "amount": 99468515.02,
+      "turnover_rate": 0.6,
+      "volume_ratio": 2.18,
+      "main_net_inflow": 13079482.0,
+      "main_net_ratio": 13.15,
+      "technical": {
+        "ma5": 7.936,
+        "ma10": 8.041,
+        "ma20": 7.931,
+        "above_ma20": true,
+        "distance_ma20_pct": 2.881,
+        "momentum_20d_pct": -1.33,
+        "volume_ratio_5d": 0.701,
+        "score": 67.266,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 8.15,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入1308万元，净流入占比13.15%",
+        "换手率0.60%，量比2.18",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 7.95,
+        "high": 8.19
+      },
+      "confirmation_price": 8.35,
+      "risk_price": 7.66
+    },
+    {
+      "rank": 23,
+      "code": "688361",
+      "name": "中科飞测",
+      "industry": "半导体",
+      "score": 70.93,
+      "snapshot_price": 395.3,
+      "change_pct": 0.98,
+      "amount": 1657497686.0,
+      "turnover_rate": 1.18,
+      "volume_ratio": 1.89,
+      "main_net_inflow": 146045416.0,
+      "main_net_ratio": 8.81,
+      "technical": {
+        "ma5": 409.37,
+        "ma10": 385.245,
+        "ma20": 356.421,
+        "above_ma20": true,
+        "distance_ma20_pct": 11.032,
+        "momentum_20d_pct": 64.207,
+        "volume_ratio_5d": 1.011,
+        "score": 59.173,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 395.74,
+        "timestamp": "20260715101739",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.1975
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入1.46亿元，净流入占比8.81%",
+        "换手率1.18%，量比1.89",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.197%"
+      ],
+      "buy_zone": {
+        "low": 385.85,
+        "high": 397.72
+      },
+      "confirmation_price": 405.63,
+      "risk_price": 345.73
+    },
+    {
+      "rank": 24,
+      "code": "603083",
+      "name": "剑桥科技",
+      "industry": "通信设备",
+      "score": 70.18,
+      "snapshot_price": 211.09,
+      "change_pct": 6.57,
+      "amount": 2903610820.0,
+      "turnover_rate": 5.1,
+      "volume_ratio": 3.28,
+      "main_net_inflow": 349438880.0,
+      "main_net_ratio": 12.05,
+      "technical": {
+        "ma5": 199.998,
+        "ma10": 201.154,
+        "ma20": 220.88,
+        "above_ma20": false,
+        "distance_ma20_pct": -3.409,
+        "momentum_20d_pct": 7.714,
+        "volume_ratio_5d": 1.03,
+        "score": 47.383,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 213.38,
+        "timestamp": "20260715101740",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入3.49亿元，净流入占比12.05%",
+        "换手率5.10%，量比3.28",
+        "现价仍在20日均线下方，需等待确认",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 208.05,
+        "high": 214.45
+      },
+      "confirmation_price": 218.71,
+      "risk_price": 200.58
+    },
+    {
+      "rank": 25,
+      "code": "002292",
+      "name": "奥飞娱乐",
+      "industry": "文娱用品",
+      "score": 69.74,
+      "snapshot_price": 7.84,
+      "change_pct": 6.02,
+      "amount": 340227368.0,
+      "turnover_rate": 4.3,
+      "volume_ratio": 3.03,
+      "main_net_inflow": 59625061.0,
+      "main_net_ratio": 17.53,
+      "technical": {
+        "ma5": 7.682,
+        "ma10": 7.564,
+        "ma20": 7.046,
+        "above_ma20": true,
+        "distance_ma20_pct": 12.404,
+        "momentum_20d_pct": 18.033,
+        "volume_ratio_5d": 1.662,
+        "score": 58.728,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 7.93,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入5963万元，净流入占比17.53%",
+        "换手率4.30%，量比3.03",
+        "现价位于20日均线上方",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 7.73,
+        "high": 7.97
+      },
+      "confirmation_price": 8.13,
+      "risk_price": 6.83
+    },
+    {
+      "rank": 26,
+      "code": "600570",
+      "name": "恒生电子",
+      "industry": "软件开发",
+      "score": 69.61,
+      "snapshot_price": 20.83,
+      "change_pct": 1.66,
+      "amount": 183810740.0,
+      "turnover_rate": 0.47,
+      "volume_ratio": 1.91,
+      "main_net_inflow": 22968720.0,
+      "main_net_ratio": 12.5,
+      "technical": {
+        "ma5": 20.918,
+        "ma10": 20.908,
+        "ma20": 21.53,
+        "above_ma20": false,
+        "distance_ma20_pct": -3.156,
+        "momentum_20d_pct": -7.662,
+        "volume_ratio_5d": 0.778,
+        "score": 56.706,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 20.85,
+        "timestamp": "20260715101740",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入2297万元，净流入占比12.50%",
+        "换手率0.47%，量比1.91",
+        "现价仍在20日均线下方，需等待确认",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 20.33,
+        "high": 20.95
+      },
+      "confirmation_price": 21.37,
+      "risk_price": 19.6
+    },
+    {
+      "rank": 27,
+      "code": "603228",
+      "name": "景旺电子",
+      "industry": "元件",
+      "score": 68.7,
+      "snapshot_price": 68.26,
+      "change_pct": -0.94,
+      "amount": 596548658.0,
+      "turnover_rate": 0.88,
+      "volume_ratio": 1.68,
+      "main_net_inflow": 73375351.0,
+      "main_net_ratio": 12.3,
+      "technical": {
+        "ma5": 68.298,
+        "ma10": 67.425,
+        "ma20": 70.9,
+        "above_ma20": false,
+        "distance_ma20_pct": -3.469,
+        "momentum_20d_pct": -12.425,
+        "volume_ratio_5d": 0.758,
+        "score": 51.133,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 68.47,
+        "timestamp": "20260715101740",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入7338万元，净流入占比12.30%",
+        "换手率0.88%，量比1.68",
+        "现价仍在20日均线下方，需等待确认",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 66.76,
+        "high": 68.81
+      },
+      "confirmation_price": 70.18,
+      "risk_price": 64.36
+    },
+    {
+      "rank": 28,
+      "code": "000776",
+      "name": "广发证券",
+      "industry": "证券Ⅱ",
+      "score": 68.37,
+      "snapshot_price": 22.35,
+      "change_pct": 1.81,
+      "amount": 1030522434.39,
+      "turnover_rate": 0.78,
+      "volume_ratio": 2.87,
+      "main_net_inflow": 102985595.0,
+      "main_net_ratio": 9.99,
+      "technical": {
+        "ma5": 22.018,
+        "ma10": 22.62,
+        "ma20": 22.697,
+        "above_ma20": false,
+        "distance_ma20_pct": -0.958,
+        "momentum_20d_pct": 4.558,
+        "volume_ratio_5d": 0.6,
+        "score": 57.108,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 22.5,
+        "timestamp": "20260715101742",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入1.03亿元，净流入占比9.99%",
+        "换手率0.78%，量比2.87",
+        "现价仍在20日均线下方，需等待确认",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 21.94,
+        "high": 22.61
+      },
+      "confirmation_price": 23.06,
+      "risk_price": 21.15
+    },
+    {
+      "rank": 29,
+      "code": "600962",
+      "name": "国投中鲁",
+      "industry": "农产品加工",
+      "score": 68.04,
+      "snapshot_price": 25.92,
+      "change_pct": 3.54,
+      "amount": 87656051.0,
+      "turnover_rate": 1.32,
+      "volume_ratio": 1.93,
+      "main_net_inflow": 11043825.0,
+      "main_net_ratio": 12.6,
+      "technical": {
+        "ma5": 24.942,
+        "ma10": 25.363,
+        "ma20": 26.179,
+        "above_ma20": false,
+        "distance_ma20_pct": -0.531,
+        "momentum_20d_pct": 4.536,
+        "volume_ratio_5d": 0.81,
+        "score": 58.837,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 26.04,
+        "timestamp": "20260715101741",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入1104万元，净流入占比12.60%",
+        "换手率1.32%，量比1.93",
+        "现价仍在20日均线下方，需等待确认",
+        "腾讯/新浪双源复核，价差0.000%"
+      ],
+      "buy_zone": {
+        "low": 25.39,
+        "high": 26.17
+      },
+      "confirmation_price": 26.69,
+      "risk_price": 24.48
+    },
+    {
+      "rank": 30,
+      "code": "300012",
+      "name": "华测检测",
+      "industry": "专业服务",
+      "score": 67.65,
+      "snapshot_price": 13.84,
+      "change_pct": 3.83,
+      "amount": 212804078.06,
+      "turnover_rate": 1.09,
+      "volume_ratio": 2.18,
+      "main_net_inflow": 34417198.0,
+      "main_net_ratio": 16.17,
+      "technical": {
+        "ma5": 13.444,
+        "ma10": 13.73,
+        "ma20": 13.963,
+        "above_ma20": false,
+        "distance_ma20_pct": -1.028,
+        "momentum_20d_pct": -1.286,
+        "volume_ratio_5d": 1.04,
+        "score": 54.138,
+        "data_quality": "DAILY_KLINE"
+      },
+      "quote_check": {
+        "price": 13.82,
+        "timestamp": "20260715101739",
+        "primary_source": "TENCENT",
+        "secondary_source": "SINA",
+        "price_deviation_pct": 0.0724
+      },
+      "reasons": [
+        "全A扫描：覆盖5875只，2050只通过基础过滤",
+        "主力净流入3442万元，净流入占比16.17%",
+        "换手率1.09%，量比2.18",
+        "现价仍在20日均线下方，需等待确认",
+        "腾讯/新浪双源复核，价差0.072%"
+      ],
+      "buy_zone": {
+        "low": 13.47,
+        "high": 13.89
+      },
+      "confirmation_price": 14.17,
+      "risk_price": 12.99
+    }
+  ]
+}
