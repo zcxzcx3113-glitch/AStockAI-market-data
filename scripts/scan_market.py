@@ -29,8 +29,10 @@ TENCENT_KLINE_API = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
 TENCENT_QUOTE_API = "https://qt.gtimg.cn/q="
 SINA_QUOTE_API = "https://hq.sinajs.cn/list="
 MARKET_SEGMENTS = {
-    "Shanghai": "m:1+t:2,m:1+t:23",
-    "Shenzhen": "m:0+t:6,m:0+t:80",
+    "Shanghai Main Board": "m:1+t:2",
+    "STAR Market": "m:1+t:23",
+    "Shenzhen Main Board": "m:0+t:6",
+    "ChiNext": "m:0+t:80",
     "Beijing": "m:0+t:81+s:2048",
 }
 FIELDS = ",".join(
