@@ -4,6 +4,7 @@ from zoneinfo import ZoneInfo
 
 from scripts.scan_market import (
     is_eligible,
+    market_rows,
     parse_sina_quotes,
     parse_tencent_quotes,
     symbol,
@@ -49,6 +50,10 @@ class ScannerTests(unittest.TestCase):
         sina_fields[30], sina_fields[31] = "2026-07-15", "15:00:00"
         sina = parse_sina_quotes(f'var hq_str_sh600519="{",".join(sina_fields)}";')
         self.assertAlmostEqual(1214.88, sina["600519"]["price"])
+
+    def test_market_rows_supports_list_and_mapping_shapes(self):
+        self.assertEqual([{"f12": "600001"}], market_rows({"diff": [{"f12": "600001"}]}))
+        self.assertEqual([{"f12": "600002"}], market_rows({"diff": {"0": {"f12": "600002"}}}))
 
     def test_feed_validation_rejects_partial_market(self):
         with self.assertRaises(ValueError):

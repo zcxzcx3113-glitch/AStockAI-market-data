@@ -84,16 +84,23 @@ def symbol(code: str) -> str:
     return "sz" + code
 
 
+def market_rows(data: dict[str, Any]) -> list[dict[str, Any]]:
+    raw = data.get("diff") or []
+    if isinstance(raw, dict):
+        return [row for row in raw.values() if isinstance(row, dict)]
+    return [row for row in raw if isinstance(row, dict)]
+
+
 def universe_query(market_filter: str, page: int, page_size: int) -> str:
     return urllib.parse.urlencode(
         {
             "pn": page,
             "pz": page_size,
             "po": 1,
-            "np": 1,
+            "np": 2,
             "fltt": 2,
             "invt": 2,
-            "fid": "f62",
+            "fid": "f3",
             "fs": market_filter,
             "fields": FIELDS,
             "ut": "bd1d9ddb04089700cf9c27f6f7426281",
@@ -106,11 +113,11 @@ def fetch_segment(name: str, market_filter: str, page_size: int = 500) -> list[d
     for endpoint in EASTMONEY_APIS:
         try:
             payload = request_json(
-                f"{endpoint}?{universe_query(market_filter, 1, 3_500)}", attempts=2, timeout=15
+                f"{endpoint}?{universe_query(market_filter, 1, 50_000)}", attempts=2, timeout=20
             )
             data = payload.get("data") or {}
             total = int(data.get("total") or 0)
-            page_rows = data.get("diff") or []
+            page_rows = market_rows(data)
             unique = {str(row.get("f12", "")): row for row in page_rows if str(row.get("f12", "")).isdigit()}
             if total > 0 and len(unique) >= total:
                 return list(unique.values())
@@ -136,7 +143,7 @@ def fetch_segment(name: str, market_filter: str, page_size: int = 500) -> list[d
         if payload is None:
             raise RuntimeError(f"all Eastmoney hosts failed for {name} page {page}: {' | '.join(errors)}")
         data = payload.get("data") or {}
-        page_rows = data.get("diff") or []
+        page_rows = market_rows(data)
         total = int(data.get("total") or 0)
         if not page_rows:
             break
