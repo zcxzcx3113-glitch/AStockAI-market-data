@@ -7,6 +7,7 @@ from scripts.scan_market import (
     market_rows,
     parse_sina_quotes,
     parse_tencent_quotes,
+    snapshot_technical_metrics,
     symbol,
     technical_metrics,
     validate_feed,
@@ -38,6 +39,11 @@ class ScannerTests(unittest.TestCase):
         result = technical_metrics(rows)
         self.assertTrue(result["above_ma20"])
         self.assertGreater(result["ma5"], result["ma20"])
+
+    def test_snapshot_proxy_keeps_scanner_available(self):
+        result = snapshot_technical_metrics({"f2": 10.2, "f3": 2.0, "f10": 1.3, "f15": 10.4, "f16": 9.8, "f17": 10.0})
+        self.assertEqual("INTRADAY_PROXY", result["data_quality"])
+        self.assertGreater(result["score"], 0)
 
     def test_quote_parsers(self):
         fields = [""] * 33

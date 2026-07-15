@@ -235,7 +235,7 @@ def fetch_kline(code: str, count: int = 70) -> list[dict[str, float | str]]:
     ticker = symbol(code)
     param = f"{ticker},day,,,{count},qfq"
     url = f"{TENCENT_KLINE_API}?{urllib.parse.urlencode({'param': param})}"
-    stock = (request_json(url, attempts=2, timeout=10).get("data") or {}).get(ticker) or {}
+    stock = (request_json(url, attempts=1, timeout=6).get("data") or {}).get(ticker) or {}
     rows = stock.get("qfqday") or stock.get("day") or []
     result = []
     for row in rows:
@@ -290,14 +290,41 @@ def technical_metrics(rows: list[dict[str, float | str]]) -> dict[str, float | b
         "momentum_20d_pct": round(momentum_20d, 3),
         "volume_ratio_5d": round(volume_ratio_5d, 3),
         "score": round(clamp(trend_score, 0, 100), 3),
+        "data_quality": "DAILY_KLINE",
     }
 
 
-def enrich_one(item: dict[str, Any]) -> dict[str, Any] | None:
+def snapshot_technical_metrics(item: dict[str, Any]) -> dict[str, Any]:
+    price = number(item.get("f2"))
+    open_price = number(item.get("f17"), price)
+    high = number(item.get("f15"), price)
+    low = number(item.get("f16"), price)
+    change = number(item.get("f3"))
+    volume_ratio = number(item.get("f10"), 1.0)
+    intraday_position = (price - low) / (high - low) if high > low else 0.5
+    score = 42.0
+    score += clamp((change + 2) / 8, 0, 1) * 20
+    score += clamp(1 - abs(volume_ratio - 1.5) / 3, 0, 1) * 22
+    score += clamp(intraday_position, 0, 1) * 10
+    score += 6 if price >= open_price else 0
+    return {
+        "ma5": None,
+        "ma10": None,
+        "ma20": None,
+        "above_ma20": None,
+        "distance_ma20_pct": None,
+        "momentum_20d_pct": None,
+        "volume_ratio_5d": None,
+        "score": round(clamp(score, 0, 100), 3),
+        "data_quality": "INTRADAY_PROXY",
+    }
+
+
+def enrich_one(item: dict[str, Any]) -> dict[str, Any]:
     try:
         metrics = technical_metrics(fetch_kline(str(item["f12"])))
     except Exception:
-        return None
+        metrics = snapshot_technical_metrics(item)
     enriched = dict(item)
     enriched["technical"] = metrics
     base = snapshot_score(item)
@@ -369,8 +396,6 @@ def fetch_quote_checks(codes: Iterable[str]) -> tuple[dict[str, dict[str, Any]],
         )
     except Exception as exc:
         print(f"warning: Sina quote verification failed: {exc}")
-    if not tencent and not sina:
-        raise RuntimeError("both Tencent and Sina quote verification failed")
     return tencent, sina
 
 
@@ -397,7 +422,9 @@ def candidate_record(item: dict[str, Any], rank: int, market_count: int, eligibl
         f"换手率{number(item.get('f8')):.2f}%，量比{number(item.get('f10'), 1.0):.2f}",
     ]
     technical = item["technical"]
-    if technical["above_ma20"]:
+    if technical["data_quality"] == "INTRADAY_PROXY":
+        reasons.append("腾讯日线暂不可用，采用涨跌幅/量比/日内位置代理评分")
+    elif technical["above_ma20"]:
         reasons.append("现价位于20日均线上方")
     else:
         reasons.append("现价仍在20日均线下方，需等待确认")
@@ -438,7 +465,11 @@ def candidate_record(item: dict[str, Any], rank: int, market_count: int, eligibl
         "reasons": reasons,
         "buy_zone": {"low": round(buy_low, 2), "high": round(buy_high, 2)},
         "confirmation_price": round(price * 1.025, 2),
-        "risk_price": round(min(price * 0.94, number(technical["ma20"]) * 0.97), 2),
+        "risk_price": round(
+            min(price * 0.94, number(technical["ma20"], price) * 0.97)
+            if number(technical["ma20"], price) > 0 else price * 0.94,
+            2,
+        ),
     }
 
 
@@ -498,6 +529,9 @@ def build_feed(top: int) -> dict[str, Any]:
             "market_count": len(universe),
             "eligible_count": len(eligible),
             "technical_checked_count": len(enriched),
+            "daily_kline_count": sum(
+                1 for row in enriched if row["technical"]["data_quality"] == "DAILY_KLINE"
+            ),
             "quote_verified_count": verified,
         },
         "sources": {
