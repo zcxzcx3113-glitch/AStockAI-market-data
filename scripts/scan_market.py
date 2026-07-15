@@ -20,7 +20,11 @@ from zoneinfo import ZoneInfo
 
 
 SHANGHAI = ZoneInfo("Asia/Shanghai")
-EASTMONEY_API = "https://push2.eastmoney.com/api/qt/clist/get"
+EASTMONEY_APIS = (
+    "https://82.push2.eastmoney.com/api/qt/clist/get",
+    "https://push2.eastmoney.com/api/qt/clist/get",
+    "https://7.push2.eastmoney.com/api/qt/clist/get",
+)
 TENCENT_KLINE_API = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
 TENCENT_QUOTE_API = "https://qt.gtimg.cn/q="
 SINA_QUOTE_API = "https://hq.sinajs.cn/list="
@@ -35,7 +39,7 @@ FIELDS = ",".join(
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AStockAI-Market-Scanner/1.0"
 
 
-def request_bytes(url: str, *, referer: str | None = None, attempts: int = 3) -> bytes:
+def request_bytes(url: str, *, referer: str | None = None, attempts: int = 4) -> bytes:
     headers = {"User-Agent": USER_AGENT, "Accept": "*/*"}
     if referer:
         headers["Referer"] = referer
@@ -48,7 +52,7 @@ def request_bytes(url: str, *, referer: str | None = None, attempts: int = 3) ->
         except Exception as exc:  # network providers can fail transiently
             last_error = exc
             if attempt + 1 < attempts:
-                time.sleep((1.0 + random.random()) * (attempt + 1))
+                time.sleep((1.5 + random.random()) * (attempt + 1))
     raise RuntimeError(f"request failed after {attempts} attempts: {url}") from last_error
 
 
@@ -76,26 +80,53 @@ def symbol(code: str) -> str:
     return "sz" + code
 
 
-def fetch_universe(page_size: int = 500) -> list[dict[str, Any]]:
+def universe_query(page: int, page_size: int) -> str:
+    return urllib.parse.urlencode(
+        {
+            "pn": page,
+            "pz": page_size,
+            "po": 1,
+            "np": 1,
+            "fltt": 2,
+            "invt": 2,
+            "fid": "f62",
+            "fs": UNIVERSE,
+            "fields": FIELDS,
+            "ut": "bd1d9ddb04089700cf9c27f6f7426281",
+        }
+    )
+
+
+def fetch_universe(page_size: int = 300) -> list[dict[str, Any]]:
+    # A single response avoids provider pagination rate limits when the endpoint honors a large pz.
+    for endpoint in EASTMONEY_APIS:
+        try:
+            payload = request_json(f"{endpoint}?{universe_query(1, 6_000)}")
+            data = payload.get("data") or {}
+            total = int(data.get("total") or 0)
+            page_rows = data.get("diff") or []
+            unique = {str(row.get("f12", "")): row for row in page_rows if str(row.get("f12", "")).isdigit()}
+            if total >= 4_000 and len(unique) >= min(total, 4_000):
+                return list(unique.values())
+        except Exception as exc:
+            print(f"warning: bulk universe request failed via {endpoint}: {exc}")
+
+    # Fallback: rotate provider hosts between smaller pages and slow down to avoid burst limiting.
     rows: list[dict[str, Any]] = []
     page = 1
     total = None
     while total is None or len(rows) < total:
-        query = urllib.parse.urlencode(
-            {
-                "pn": page,
-                "pz": page_size,
-                "po": 1,
-                "np": 1,
-                "fltt": 2,
-                "invt": 2,
-                "fid": "f62",
-                "fs": UNIVERSE,
-                "fields": FIELDS,
-                "ut": "bd1d9ddb04089700cf9c27f6f7426281",
-            }
-        )
-        payload = request_json(f"{EASTMONEY_API}?{query}")
+        payload = None
+        errors = []
+        for offset in range(len(EASTMONEY_APIS)):
+            endpoint = EASTMONEY_APIS[(page + offset) % len(EASTMONEY_APIS)]
+            try:
+                payload = request_json(f"{endpoint}?{universe_query(page, page_size)}")
+                break
+            except Exception as exc:
+                errors.append(f"{endpoint}: {exc}")
+        if payload is None:
+            raise RuntimeError(f"all Eastmoney hosts failed on page {page}: {' | '.join(errors)}")
         data = payload.get("data") or {}
         page_rows = data.get("diff") or []
         total = int(data.get("total") or 0)
@@ -103,7 +134,7 @@ def fetch_universe(page_size: int = 500) -> list[dict[str, Any]]:
             break
         rows.extend(page_rows)
         page += 1
-        time.sleep(0.08)
+        time.sleep(0.35 + random.random() * 0.2)
     unique = {str(row.get("f12", "")): row for row in rows if str(row.get("f12", "")).isdigit()}
     if total is None or total < 4_000 or len(unique) < min(total, 4_000):
         raise RuntimeError(f"incomplete A-share universe: expected={total}, received={len(unique)}")
