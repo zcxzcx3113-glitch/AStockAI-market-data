@@ -111,38 +111,24 @@ def universe_query(market_filter: str, page: int, page_size: int) -> str:
     )
 
 
-def fetch_segment(name: str, market_filter: str, page_size: int = 500) -> list[dict[str, Any]]:
-    # Per-exchange bulk responses avoid the provider's deep-pagination limit.
-    for endpoint in EASTMONEY_APIS:
-        try:
-            payload = request_json(
-                f"{endpoint}?{universe_query(market_filter, 1, 50_000)}", attempts=2, timeout=20
-            )
-            data = payload.get("data") or {}
-            total = int(data.get("total") or 0)
-            page_rows = market_rows(data)
-            unique = {str(row.get("f12", "")): row for row in page_rows if str(row.get("f12", "")).isdigit()}
-            if total > 0 and len(unique) >= total:
-                return list(unique.values())
-        except Exception as exc:
-            print(f"warning: {name} bulk request failed via {endpoint}: {exc}", flush=True)
-
-    # Fallback: rotate provider hosts between smaller pages and slow down to avoid burst limiting.
+def fetch_segment(name: str, market_filter: str, page_size: int = 100) -> list[dict[str, Any]]:
+    # Use provider-native page size and a conservative cadence to avoid burst limiting.
     rows: list[dict[str, Any]] = []
     page = 1
     total = None
     while total is None or len(rows) < total:
         payload = None
         errors = []
-        for offset in range(len(EASTMONEY_APIS)):
-            endpoint = EASTMONEY_APIS[(page + offset) % len(EASTMONEY_APIS)]
+        for attempt in range(6):
+            endpoint = EASTMONEY_APIS[(page + attempt) % len(EASTMONEY_APIS)]
             try:
                 payload = request_json(
-                    f"{endpoint}?{universe_query(market_filter, page, page_size)}", attempts=2, timeout=15
+                    f"{endpoint}?{universe_query(market_filter, page, page_size)}", attempts=1, timeout=15
                 )
                 break
             except Exception as exc:
                 errors.append(f"{endpoint}: {exc}")
+                time.sleep(4.0 * (attempt + 1) + random.random())
         if payload is None:
             raise RuntimeError(f"all Eastmoney hosts failed for {name} page {page}: {' | '.join(errors)}")
         data = payload.get("data") or {}
@@ -152,7 +138,7 @@ def fetch_segment(name: str, market_filter: str, page_size: int = 500) -> list[d
             break
         rows.extend(page_rows)
         page += 1
-        time.sleep(0.35 + random.random() * 0.2)
+        time.sleep(1.25 + random.random() * 0.35)
     unique = {str(row.get("f12", "")): row for row in rows if str(row.get("f12", "")).isdigit()}
     if total is None or total <= 0 or len(unique) < total:
         raise RuntimeError(f"incomplete {name} universe: expected={total}, received={len(unique)}")
