@@ -102,7 +102,8 @@ def universe_query(market_filter: str, page: int, page_size: int) -> str:
             "np": 2,
             "fltt": 2,
             "invt": 2,
-            "fid": "f3",
+            # Sort by immutable stock code so pagination cannot duplicate equal price-change rows.
+            "fid": "f12",
             "fs": market_filter,
             "fields": FIELDS,
             "ut": "bd1d9ddb04089700cf9c27f6f7426281",
